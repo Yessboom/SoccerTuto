@@ -5,7 +5,7 @@ const DURATION_TACKLE := 20
 
 
 enum ControlScheme {CPU, P1, P2}
-enum State {MOVING, TACKLING}
+enum State {MOVING, TACKLING, RECOVERING}
 
 @export var control_scheme: ControlScheme
 @export var speed : float
