@@ -1,10 +1,15 @@
 class_name PlayerStateShooting
+extends PlayerState
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _enter_tree() -> void:
+	animation_player.play("kick")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+func on_animation_complete()->void:
+	if player.control_scheme == Player.ControlScheme.CPU:
+		transition_state(Player.State.RECOVERING)
+	else:
+		transition_state(Player.State.MOVING)
+	shoot_ball()
+		
+func shoot_ball()->void:
+	ball.shoot(state_data.shot_direction * state_data.shot_power)
