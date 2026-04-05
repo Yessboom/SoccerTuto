@@ -5,8 +5,6 @@ const GRAVITY := 10.0
 
 signal state_transition_requested(new_state: Ball.State)
 
-
-
 var animation_player : AnimationPlayer = null
 var ball: Ball = null
 var carrier : Player = null
