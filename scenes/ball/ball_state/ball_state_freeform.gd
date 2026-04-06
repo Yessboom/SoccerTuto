@@ -16,3 +16,5 @@ func _process(delta: float) -> void:
 	process_gravity(delta, ball.BOUNCINESS)
 	move_and_bounce(delta)
 	
+func can_air_interact() -> bool:
+	return true
