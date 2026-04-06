@@ -1,12 +1,22 @@
 class_name PlayerStateVolleyKick
 extends PlayerState
 
+const BALL_HEIGHT_MIN := 1.0
+const BALL_HEIGHT_MAX := 20.0
+const BONUS_POWER := 1.5
 
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	pass # Replace with function body.
+func _enter_tree() -> void:
+	animation_player.play("volley_kick")
+	ball_detection_area.body_entered.connect(on_ball_entered.bind())
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+
+func on_animation_complete()->void:
+	transition_state(Player.State.RECOVERING)
+	
+
+func on_ball_entered(contact_ball : Ball) -> void:
+	if contact_ball.can_air_connect(BALL_HEIGHT_MIN, BALL_HEIGHT_MAX):
+		var destination := target_goal.get_random_target_position()
+		var direction := ball.position.direction_to(destination)
+		contact_ball.shoot(direction * player.power * BONUS_POWER)
