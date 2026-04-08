@@ -1,6 +1,7 @@
 class_name Player 
 extends CharacterBody2D
 
+const BALL_CONTROL_HEIGHT := 1.0
 const CONTROL_SCHEME_MAP : Dictionary = {
 	ControlScheme.CPU : preload("res://assets/art/props/cpu.png"),
 	ControlScheme.P1 : preload("res://assets/art/props/1p.png"),
@@ -8,8 +9,11 @@ const CONTROL_SCHEME_MAP : Dictionary = {
 }
 const GRAVITY := 8.0
 
+
 enum ControlScheme {CPU, P1, P2}
-enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEADER, VOLLEY_KICK, BICYCLE_KICK}
+enum Role {GOALIE, DEFENSE,  MIDFIELD, OFFENSE}
+enum SkinColor {LIGHT, MEDIUM, DARK}
+enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEADER, VOLLEY_KICK, BICYCLE_KICK, CHEST_CONTROL}
 
 @export var ball: Ball
 @export var control_scheme: ControlScheme
@@ -25,9 +29,12 @@ enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEAD
 @onready var teammate_detection_area : Area2D = %TeammateDetectionArea
 
 var current_state : PlayerState = null
+var fullname := ""
 var heading:= Vector2.RIGHT
 var height := 0.0
 var height_velocity := 0.0
+var role := Player.Role.MIDFIELD
+var skin_color := Player.SkinColor.MEDIUM
 var state_factory := PlayerStateFactory.new()
 
 func _ready()-> void:
@@ -39,6 +46,18 @@ func _process(delta: float) -> void:
 	set_sprite_visibility()
 	process_gravity(delta)
 	move_and_slide()
+	
+func initialize(context_position: Vector2, context_ball : Ball, context_own_goal : Goal, context_target_goal : Goal, context_player_data : PlayerResource) -> void:
+	position = context_position
+	ball = context_ball
+	own_goal = context_own_goal
+	target_goal = context_target_goal
+	speed = context_player_data.speed
+	power = context_player_data.power
+	role = context_player_data.role
+	skin_color = context_player_data.skin_color
+	fullname = context_player_data.full_name
+	heading = Vector2.LEFT if target_goal.position.x < position.x else Vector2.RIGHT
 
 func switch_state(state: State, state_data: PlayerStateData = PlayerStateData.new())-> void:
 	if current_state != null:
@@ -90,3 +109,8 @@ func on_animation_complete() ->void:
 	if current_state != null:
 		current_state.on_animation_complete()
 		
+func control_ball() -> void:
+	if ball.height >= BALL_CONTROL_HEIGHT:
+		switch_state(Player.State.CHEST_CONTROL)
+	
+	

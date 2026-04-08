@@ -4,8 +4,8 @@
 [ext_resource type="Script" uid="uid://bn2feqx2i6lxe" path="res://scenes/camera.gd" id="1_qfnet"]
 [ext_resource type="Texture2D" uid="uid://dg4t87bg4ywqn" path="res://assets/art/backgrounds/pitch-pattern.png" id="2_k0juu"]
 [ext_resource type="Texture2D" uid="uid://cilptvtgotvyq" path="res://assets/art/backgrounds/pitch-lines.png" id="3_71j4m"]
-[ext_resource type="PackedScene" uid="uid://clf4gwu6q76tn" path="res://scenes/characters/player.tscn" id="4_k0juu"]
 [ext_resource type="PackedScene" uid="uid://csktgvsw1dc6i" path="res://scenes/ball/ball.tscn" id="5_71j4m"]
+[ext_resource type="Script" uid="uid://bkw5gplh17qid" path="res://scenes/actors_container.gd" id="5_e3hyu"]
 [ext_resource type="PackedScene" uid="uid://s8ado31t58go" path="res://scenes/goal/goal.tscn" id="5_i7141"]
 [ext_resource type="Texture2D" uid="uid://cxhfm47opwqyq" path="res://assets/art/backgrounds/top-wall.png" id="6_4mrxx"]
 [ext_resource type="Texture2D" uid="uid://cadt33aaipdr4" path="res://assets/art/backgrounds/bottom-wall.png" id="7_7r4gi"]
@@ -39,8 +39,36 @@ modulate = Color(0.9411765, 0.9411765, 0.9411765, 1)
 texture = ExtResource("3_71j4m")
 centered = false
 
-[node name="ActorsContainer" type="Node2D" parent="." unique_id=5714562]
+[node name="ActorsContainer" type="Node2D" parent="." unique_id=5714562 node_paths=PackedStringArray("ball", "goal_home", "goal_away")]
 y_sort_enabled = true
+script = ExtResource("5_e3hyu")
+ball = NodePath("Ball")
+goal_home = NodePath("PitchObjects/GoalHome")
+goal_away = NodePath("PitchObjects/GoalAway")
+team_home = "FRANCE"
+team_away = "GERMANY"
+
+[node name="Spawns" type="Node2D" parent="ActorsContainer" unique_id=322929888]
+unique_name_in_owner = true
+position = Vector2(425, 180)
+
+[node name="GoaliePosition" type="Node2D" parent="ActorsContainer/Spawns" unique_id=1393632619]
+position = Vector2(-345, 1)
+
+[node name="DefensePosition" type="Node2D" parent="ActorsContainer/Spawns" unique_id=406062495]
+position = Vector2(-235, -30)
+
+[node name="DefensePosition2" type="Node2D" parent="ActorsContainer/Spawns" unique_id=1123574167]
+position = Vector2(-235, 30)
+
+[node name="MidfieldPosition" type="Node2D" parent="ActorsContainer/Spawns" unique_id=826591546]
+position = Vector2(-125, 0)
+
+[node name="OffensePosition" type="Node2D" parent="ActorsContainer/Spawns" unique_id=1599160320]
+position = Vector2(-25, -80)
+
+[node name="OffensePosition2" type="Node2D" parent="ActorsContainer/Spawns" unique_id=296134335]
+position = Vector2(-25, 80)
 
 [node name="PitchObjects" type="Node2D" parent="ActorsContainer" unique_id=1042938858]
 y_sort_enabled = true
@@ -100,25 +128,5 @@ collision_mask = 0
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="ActorsContainer/PitchObjects/RightWall/StaticBody2D" unique_id=1646548608]
 polygon = PackedVector2Array(14, -1, 29, -1, 14, 119, 0, 118)
 
-[node name="Player" parent="ActorsContainer" unique_id=1118541133 node_paths=PackedStringArray("ball", "own_goal", "target_goal") instance=ExtResource("4_k0juu")]
-position = Vector2(110, 143)
-ball = NodePath("../Ball")
-control_scheme = 1
-own_goal = NodePath("../PitchObjects/GoalHome")
-target_goal = NodePath("../PitchObjects/GoalAway")
-
-[node name="Player2" parent="ActorsContainer" unique_id=621201826 node_paths=PackedStringArray("ball", "own_goal", "target_goal") instance=ExtResource("4_k0juu")]
-position = Vector2(115, 196)
-ball = NodePath("../Ball")
-own_goal = NodePath("../PitchObjects/GoalHome")
-target_goal = NodePath("../PitchObjects/GoalAway")
-
-[node name="Player3" parent="ActorsContainer" unique_id=1747577877 node_paths=PackedStringArray("ball", "own_goal", "target_goal") instance=ExtResource("4_k0juu")]
-position = Vector2(94, 181)
-ball = NodePath("../Ball")
-control_scheme = 2
-own_goal = NodePath("../PitchObjects/GoalHome")
-target_goal = NodePath("../PitchObjects/GoalAway")
-
 [node name="Ball" parent="ActorsContainer" unique_id=120365547 instance=ExtResource("5_71j4m")]
-position = Vector2(140, 150)
+position = Vector2(425, 180)
