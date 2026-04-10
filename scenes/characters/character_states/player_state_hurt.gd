@@ -10,6 +10,7 @@ const HURT_HEIGHT_VELOCITY := 3.0
 var time_start_hurt := Time.get_ticks_msec()
 
 func _enter_tree()-> void:
+	player.height = 0.01
 	animation_player.play("hurt")
 	time_start_hurt = Time.get_ticks_msec()
 	player.height_velocity = HURT_HEIGHT_VELOCITY

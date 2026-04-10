@@ -5,7 +5,6 @@ const DURATION_CONTROL := 500
 var time_since_control := Time.get_ticks_msec()
 
 func _enter_tree() -> void:
-	print("TEST")
 	animation_player.play("chest_control")
 	player.velocity = Vector2.ZERO
 	time_since_control = Time.get_ticks_msec()
