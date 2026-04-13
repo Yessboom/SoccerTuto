@@ -25,4 +25,5 @@ func _process(delta: float) -> void:
 		transition_state(Player.State.SHOOTING, data)
 		
 		
-		
+func can_pass() -> bool:
+	return true
