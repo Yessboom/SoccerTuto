@@ -12,7 +12,10 @@ func on_animation_complete()->void:
 	if pass_target == null:
 		ball.pass_to(ball.position + player.heading * player.speed)
 	else:
-		ball.pass_to(pass_target.position + pass_target.velocity)
+		var direction := player.position.direction_to(pass_target.position)
+		if sign(player.heading.x) != sign(direction.x):
+			player.heading *= -1
+		ball.pass_to(pass_target.position + pass_target.velocity * 0.8)
 	transition_state(Player.State.MOVING)
 	
 func find_teammate_in_view() -> Player:

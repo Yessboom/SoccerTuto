@@ -26,7 +26,7 @@ func handle_human_movment():
 			
 	elif KeyUtils.is_action_just_pressed(player.control_scheme, KeyUtils.Action.SHOOT):
 		if player.has_ball():
-			transition_state(Player.State.SHOOTING)
+			transition_state(Player.State.PREPPING_SHOT)
 		elif ball.can_air_interact():
 			if player.velocity == Vector2.ZERO:
 				if player.is_facing_target_goal():

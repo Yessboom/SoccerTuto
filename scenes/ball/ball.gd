@@ -2,7 +2,7 @@ class_name Ball
 extends AnimatableBody2D
 
 const BOUNCINESS := 0.8
-const DISTANCE_HIGH_PASS := 130
+const DISTANCE_HIGH_PASS := 90
 const DURATION_TUMBLE_LOCK := 200
 const DURATION_PASS_LOCK := 500
 const TUMBLE_HEIGHT_VELOCITY := 3.0
@@ -53,15 +53,15 @@ func tumble(tumble_velocity : Vector2) -> void:
 	switch_state(Ball.State.FREEFORM, BallStateData.build().set_lock_duration(DURATION_TUMBLE_LOCK))
 	
 
-func pass_to(destination: Vector2) ->void:
+func pass_to(destination: Vector2, lock_duration: int = DURATION_PASS_LOCK) ->void:
 	var direction := position.direction_to(destination)
 	var distance := position.distance_to(destination)
 	var intensity := sqrt( 2 * distance * friction_ground )
 	velocity = intensity * direction
 	if distance > DISTANCE_HIGH_PASS:
-		height_velocity = BallState.GRAVITY * distance / (1.8 * intensity)
+		height_velocity = BallState.GRAVITY * distance / (1.85 * intensity)
 	carrier = null
-	switch_state(Ball.State.FREEFORM, BallStateData.build().set_lock_duration(DURATION_PASS_LOCK))
+	switch_state(Ball.State.FREEFORM, BallStateData.build().set_lock_duration(lock_duration))
 	
 func stop() -> void:
 	velocity = Vector2.ZERO
