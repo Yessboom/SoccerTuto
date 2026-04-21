@@ -2,9 +2,10 @@ class_name Ball
 extends AnimatableBody2D
 
 const BOUNCINESS := 0.8
-const DISTANCE_HIGH_PASS := 90
+const DISTANCE_HIGH_PASS := 130
 const DURATION_TUMBLE_LOCK := 200
 const DURATION_PASS_LOCK := 500
+const KICKOFF_PASS_DISTANCE := 120.0
 const TUMBLE_HEIGHT_VELOCITY := 3.0
 
 enum State {CARRIED, FREEFORM, SHOT}
@@ -30,6 +31,7 @@ func _ready() -> void:
 	switch_state(State.FREEFORM)
 	spawn_position = position
 	GameEvents.team_reset.connect(on_team_reset.bind())
+	GameEvents.kickoff_started.connect(on_kickoff_start.bind())
 
 func _process(_delta: float) -> void:
 	ball_sprite.position = Vector2.UP * height
@@ -84,3 +86,6 @@ func on_team_reset() -> void:
 	position = spawn_position
 	velocity = Vector2.ZERO
 	switch_state(State.FREEFORM)
+	
+func on_kickoff_start() -> void:
+	pass_to(spawn_position + Vector2.DOWN * KICKOFF_PASS_DISTANCE, 0)
