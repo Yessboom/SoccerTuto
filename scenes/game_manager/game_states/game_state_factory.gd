@@ -8,7 +8,8 @@ func _init() -> void:
 		GameManager.State.GAMEOVER : GameStateGameOver,
 		GameManager.State.OVERTIME : GameStateOvertime,
 		GameManager.State.RESET : GameStateReset, 
-		GameManager.State.SCORED : GameStateScored
+		GameManager.State.SCORED : GameStateScored,
+		GameManager.State.KICKOFF : GameStateKickoff
 		
 		
 	}

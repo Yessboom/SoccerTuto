@@ -44,9 +44,6 @@ inner_circle_weight: float, outer_circle_radius: float, outer_circle_weight: flo
 		var close_range_distance := outer_circle_radius - inner_circle_radius
 		return lerpf(inner_circle_weight, outer_circle_weight, distance_to_inner_radius / close_range_distance)
 		
-func face_towards_target_goal() -> void:
-	if not player.is_facing_target_goal():
-		player.heading *= -1 		
 
 func is_ball_possessed_by_opponent() -> bool:
 	return ball.carrier != null and ball.carrier.country != player.country
