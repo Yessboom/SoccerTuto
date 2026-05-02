@@ -17,7 +17,6 @@ config/icon="res://icon.svg"
 
 [autoload]
 
-KeyUtils="*uid://bpppm0iypvxoi"
 DataLoader="*uid://c431kto71nvri"
 GameEvents="*uid://08eh7q1t3c3d"
 GameManager="*uid://bwkjdkt0td4os"
@@ -34,6 +33,11 @@ window/size/window_width_override=1400
 window/size/window_height_override=900
 window/stretch/mode="viewport"
 window/stretch/scale_mode="integer"
+
+[gui]
+
+theme/custom="uid://cjsli0jqjxbxn"
+theme/custom_font="uid://bh2fwbw3xgja8"
 
 [input]
 
