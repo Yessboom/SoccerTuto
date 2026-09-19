@@ -14,7 +14,7 @@ func _enter_tree() -> void:
 	if valid_control_schemes.size() == 0:
 		valid_control_schemes.append(Player.ControlScheme.P1)
 
-func _process(delta: float) -> void:
+func _process(_delta: float) -> void:
 	for control_scheme : Player.ControlScheme in valid_control_schemes:
 		if KeyUtils.is_action_just_pressed(control_scheme, KeyUtils.Action.PASS):
 			GameEvents.kickoff_started.emit()

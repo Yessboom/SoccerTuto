@@ -33,6 +33,8 @@ enum State {MOVING, TACKLING, RECOVERING, PREPPING_SHOT, SHOOTING, PASSING, HEAD
 @onready var opponent_detection_area : Area2D = %OpponentDetectionArea
 @onready var permanent_damage_emitter_area : Area2D = %PermanentDamageEmitterArea
 @onready var player_sprite: Sprite2D = %PlayerSprite
+@onready var root_particles : Node2D = %RootParticles
+@onready var run_particles : GPUParticles2D = %RunParticles
 @onready var tackle_damage_emitter_area : Area2D = %TackleDamageEmitterArea
 @onready var teammate_detection_area : Area2D = %TeammateDetectionArea
 
@@ -143,10 +145,12 @@ func flip_sprite():
 		player_sprite.flip_h = false
 		tackle_damage_emitter_area.scale.x = 1
 		opponent_detection_area.scale.x = 1
+		root_particles.scale.x = 1
 	elif heading == Vector2.LEFT:
 		player_sprite.flip_h = true
 		tackle_damage_emitter_area.scale.x = -1
 		opponent_detection_area.scale.x = -1
+		root_particles.scale.x = -1
 		
 func set_control_scheme(scheme : ControlScheme) -> void:
 	control_scheme = scheme
@@ -154,6 +158,7 @@ func set_control_scheme(scheme : ControlScheme) -> void:
 
 func set_sprite_visibility() -> void:
 	control_sprite.visible = has_ball() or not control_scheme == ControlScheme.CPU
+	run_particles.emitting = velocity.length() == speed
 
 func get_hurt(hurt_origin: Vector2) -> void:
 	switch_state(Player.State.HURT, PlayerStateData.build().set_hurt_direction(hurt_origin))

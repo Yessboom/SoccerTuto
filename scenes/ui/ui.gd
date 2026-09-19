@@ -52,7 +52,7 @@ func on_score_changed() ->void:
 	update_score()
 
 func on_team_reset() -> void:
-	if GameManager.has_someone_score():
+	if GameManager.has_someone_scored():
 		animation_player.play("goal_hide")
 
 func on_game_over(_country_winner: String) -> void:

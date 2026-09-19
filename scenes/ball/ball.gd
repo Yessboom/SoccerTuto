@@ -17,7 +17,9 @@ enum State {CARRIED, FREEFORM, SHOT}
 @onready var animation_player : AnimationPlayer = %AnimationPlayer
 @onready var ball_sprite: Sprite2D = %BallSprite
 @onready var player_detection_area : Area2D = %PlayerDetectionArea
+@onready var player_proximity_area : Area2D = %PlayerProximityArea
 @onready var scoring_raycast : RayCast2D = %ScoringRayCast
+@onready var shot_particles: GPUParticles2D = %ShotParticles
 
 var carrier : Player = null
 var current_state: BallState = null
@@ -41,7 +43,7 @@ func switch_state(state: Ball.State,  data: BallStateData = BallStateData.new())
 	if current_state != null:
 		current_state.queue_free()
 	current_state = state_factory.get_fresh_state(state)
-	current_state.setup(self, data, player_detection_area, carrier, animation_player, ball_sprite)
+	current_state.setup(self, data, player_detection_area, carrier, animation_player, ball_sprite, shot_particles)
 	current_state.state_transition_requested.connect(switch_state.bind())
 	current_state.name ="BallStateMachine"
 	call_deferred("add_child", current_state)
@@ -81,6 +83,10 @@ func is_headed_for_scoring_area(scoring_area: Area2D) -> bool:
 	if not scoring_raycast.is_colliding():
 		return false
 	return scoring_raycast.get_collider() ==scoring_area
+	
+func get_proximity_teammates_count(country:String) -> int:
+	var players := player_proximity_area.get_overlapping_bodies()
+	return players.filter(func(p:Player): return p.country == country).size()
 		
 func on_team_reset() -> void:
 	position = spawn_position
