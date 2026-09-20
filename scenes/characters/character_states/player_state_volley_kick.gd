@@ -20,3 +20,4 @@ func on_ball_entered(contact_ball : Ball) -> void:
 		var destination := target_goal.get_random_target_position()
 		var direction := ball.position.direction_to(destination)
 		contact_ball.shoot(direction * player.power * BONUS_POWER)
+		SoundPlayer.play(SoundPlayer.Sound.POWERSHOT)
