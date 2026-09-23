@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://dtb74tcmb7shd"]
 
 [ext_resource type="Texture2D" uid="uid://by5j445dxq7na" path="res://assets/art/ui/mainmenu/menu-background.png" id="1_3kkw7"]
+[ext_resource type="Script" uid="uid://d0v7ed1yke18u" path="res://scenes/screens/main_menu/main_menu_screen.gd" id="1_ai35v"]
 [ext_resource type="Texture2D" uid="uid://ccw5sn7m7ycdp" path="res://assets/art/ui/mainmenu/title.png" id="2_du1io"]
 [ext_resource type="Texture2D" uid="uid://cva2jfjhsqk0k" path="res://assets/art/ui/mainmenu/menu-mask.png" id="3_ai35v"]
 [ext_resource type="Texture2D" uid="uid://dvvb6wgdc1ws5" path="res://assets/art/ui/mainmenu/layout-p1.png" id="4_nawi7"]
@@ -184,6 +185,20 @@ tracks/6/keys = {
 "update": 0,
 "values": [Color(1, 1, 1, 0), Color(1, 1, 1, 1)]
 }
+tracks/7/type = "method"
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/path = NodePath(".")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/keys = {
+"times": PackedFloat32Array(1.2),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"on_set_active"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_1h8ap"]
 _data = {
@@ -237,6 +252,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_ai35v")
 
 [node name="Background" type="TextureRect" parent="." unique_id=1019897224]
 layout_mode = 0
@@ -260,7 +276,7 @@ anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
 offset_left = -125.0
-offset_bottom = 180.0
+offset_bottom = 180.00003
 grow_horizontal = 0
 texture = ExtResource("3_ai35v")
 
@@ -295,6 +311,7 @@ grow_vertical = 0
 texture = ExtResource("5_1h8ap")
 
 [node name="SinglePlayerTexture" type="TextureRect" parent="Background" unique_id=196558189]
+unique_name_in_owner = true
 layout_mode = 1
 offset_left = 35.0
 offset_top = 100.0
@@ -304,6 +321,7 @@ texture = ExtResource("6_u4ap7")
 stretch_mode = 2
 
 [node name="TwoPlayerTexture" type="TextureRect" parent="Background" unique_id=1486864729]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 35.0
 offset_top = 125.0
@@ -313,6 +331,7 @@ texture = ExtResource("7_1jwuw")
 stretch_mode = 2
 
 [node name="SelectionIcon" type="TextureRect" parent="Background" unique_id=615193741]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 10.0
 offset_top = 100.0
@@ -324,6 +343,7 @@ stretch_mode = 2
 
 [node name="MenuAnimationPlayer" type="AnimationPlayer" parent="." unique_id=75119225]
 libraries/ = SubResource("AnimationLibrary_1h8ap")
+autoplay = &"start"
 
 [node name="BallAnimationPlayer" type="AnimationPlayer" parent="." unique_id=960902187]
 root_node = NodePath("../MenuAnimationPlayer")
